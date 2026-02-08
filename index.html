@@ -117,7 +117,6 @@
 
 <body>
   <div class="card">
-    <!-- QUESTION -->
     <h1>Baby, will you be my Valentine? ❤️</h1>
 
     <div class="buttons" id="buttons">
@@ -125,13 +124,8 @@
       <button id="noBtn" type="button">No 😢</button>
     </div>
 
-    <!-- AFTER YES -->
     <div class="gift" id="gift">
-      <img
-        src="https://media.tenor.com/xoYT2AFu8L8AAAAM/hugs-love.gif"
-        alt="Cute Valentine GIF"
-        class="valentine-gif"
-      />
+      <img src="tenor.gif" alt="Cute Valentine GIF" class="valentine-gif" />
       <div class="gift-box">💝</div>
       <div class="love-text">
         Love you sooo much, baby ❤️<br />
@@ -153,11 +147,10 @@
 
     let scale = 1;
 
-    // NO button shrinks every click
+    // Shrink NO button on click
     noBtn.addEventListener("click", () => {
-      scale -= 0.15; // shrink by 15%
+      scale -= 0.15;
       if (scale <= 0.1) {
-        // hide completely if too small
         noBtn.style.display = "none";
       } else {
         noBtn.style.transform = `scale(${scale})`;
@@ -170,13 +163,15 @@
       gift.style.display = "block";
     });
 
-    // Optional: wiggle effect when hovering over NO
+    // Optional: wiggle effect on hover
     noBtn.addEventListener("mouseenter", () => {
       noBtn.style.transform += " rotate(10deg)";
-      setTimeout(() => noBtn.style.transform = `scale(${scale})`, 200);
+      setTimeout(() => {
+        if (scale > 0.1) noBtn.style.transform = `scale(${scale})`;
+      }, 200);
     });
 
-    // Extra for touch devices
+    // For touch devices
     document.body.addEventListener("touchstart", () => {}, {passive:true});
   </script>
 </body>
