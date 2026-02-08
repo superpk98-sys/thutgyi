@@ -39,6 +39,8 @@
       padding: 32px 24px 24px;
       box-shadow: 0 20px 40px rgba(255, 77, 109, 0.25);
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
     h1 {
@@ -61,6 +63,8 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
+      touch-action: manipulation;
+      pointer-events: auto;
     }
 
     #yesBtn {
@@ -81,14 +85,8 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .valentine-gif {
@@ -123,8 +121,8 @@
     <h1>Baby, will you be my Valentine? ❤️</h1>
 
     <div class="buttons" id="buttons">
-      <button id="yesBtn">Yes 💖</button>
-      <button id="noBtn">No 😢</button>
+      <button id="yesBtn" type="button">Yes 💖</button>
+      <button id="noBtn" type="button">No 😢</button>
     </div>
 
     <!-- AFTER YES -->
@@ -136,7 +134,7 @@
       />
       <div class="gift-box">💝</div>
       <div class="love-text">
-        Love you soo much, baby ❤️<br />
+        Love you sooo much, baby ❤️<br />
         You are my Valentine 💕
       </div>
     </div>
@@ -155,16 +153,31 @@
 
     let scale = 1;
 
+    // NO button shrinks every click
     noBtn.addEventListener("click", () => {
-      scale -= 0.15;
-      if (scale < 0.3) scale = 0.3;
-      noBtn.style.transform = `scale(${scale})`;
+      scale -= 0.15; // shrink by 15%
+      if (scale <= 0.1) {
+        // hide completely if too small
+        noBtn.style.display = "none";
+      } else {
+        noBtn.style.transform = `scale(${scale})`;
+      }
     });
 
+    // YES button shows gift
     yesBtn.addEventListener("click", () => {
       buttons.style.display = "none";
       gift.style.display = "block";
     });
+
+    // Optional: wiggle effect when hovering over NO
+    noBtn.addEventListener("mouseenter", () => {
+      noBtn.style.transform += " rotate(10deg)";
+      setTimeout(() => noBtn.style.transform = `scale(${scale})`, 200);
+    });
+
+    // Extra for touch devices
+    document.body.addEventListener("touchstart", () => {}, {passive:true});
   </script>
 </body>
 </html>
